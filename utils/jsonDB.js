@@ -1,9 +1,10 @@
-import {existsSync} from "node:fs"
-import { readFile, writeFile } from "node:fs/promises"
+const { readFile, writeFile } = require("node:fs/promises");
+const path = require("node:path");
+const DB_FILE = path.join(__dirname, "..", "db", "todo.json");
 
-const DB_FILE = "./db.json"
-
-export const readDB = async () => {
+//__dirname: chỉ ra đường dẫn tại file chạy lệnh
+console.log(DB_FILE)
+const readDB = async () => {
 
     try {
         const result = await readFile(DB_FILE,'utf8')
@@ -17,8 +18,10 @@ export const readDB = async () => {
     
 }
 
-export const writeDB = async (data) => {
+ const writeDB = async (data) => {
     await writeFile(DB_FILE, JSON.stringify(data, null, 2), 'utf-8')
 }
 
+
+module.exports = { readDB, writeDB}
 

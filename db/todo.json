@@ -7,6 +7,12 @@
       "postId": 1,
       "createdAt": "Sun Dec 28 2025 16:15:47 GMT+0700 (Indochina Time)",
       "content": "Bình luân 1"
+    },
+    {
+      "id": 2,
+      "postId": 2,
+      "createdAt": "Mon Dec 29 2025 11:20:38 GMT+0700 (Indochina Time)",
+      "comment": "Bình luân 2"
     }
   ]
 }

@@ -6,7 +6,7 @@ const commentController = require("@/controller/comment.controller")
 
 router.get('/',commentController.getAllComment)
 router.get('/:id', commentController.getOneComment)
-router.post('/', commentController.cretaComment)
+router.post('/', commentController.creatComment)
 
 
 module.exports = router 

@@ -1,10 +1,12 @@
-[
-  {
-    "id": "1",
-    "taskName": "Lau nhà"
-  },
-  {
-    "id": "2",
-    "taskName": "Rửa bát"
-  }
-]
+{
+  "posts": [],
+  "tasks": [],
+  "comments": [
+    {
+      "id": 1,
+      "postId": 1,
+      "createdAt": "Sun Dec 28 2025 16:15:47 GMT+0700 (Indochina Time)",
+      "content": "Bình luân 1"
+    }
+  ]
+}

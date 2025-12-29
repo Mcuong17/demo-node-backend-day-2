@@ -4,6 +4,13 @@ const DB_FILE = path.join(__dirname, "..", "db", "todo.json");
 
 //__dirname: chỉ ra đường dẫn tại file chạy lệnh
 console.log(DB_FILE)
+
+const defaultFormatDB = {
+    posts: [],
+    tasks: [],
+    comments: []
+}
+
 const readDB = async () => {
 
     try {
@@ -11,7 +18,7 @@ const readDB = async () => {
         return JSON.parse(result)
     } catch (error) {
         if(error.code == 'ENOENT') {
-            await writeDB({})
+            await writeDB(defaultFormatDB)
             return {}
         }
     }

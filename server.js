@@ -48,14 +48,7 @@ app.use((req, res, next) => {
 // Router
 app.use('/api', appRoute)
 
-writeDB([
-  {id: '1', taskName: 'Lau nhà'},
-  {id: '2', taskName: 'Rửa bát'}
-])
 
-readDB().then(data => {
-  console.log("DATA:", data);
-});
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)

@@ -9,6 +9,7 @@
     "dev": "node --watch server.js"
   },
   "_moduleAliases": {
-    "@": "./src"
+    "@": "./src",
+    "~":"src/utils"
   }
 }

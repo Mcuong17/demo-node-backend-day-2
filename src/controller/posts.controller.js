@@ -1,16 +1,22 @@
-const commentModels = require("@/models/comment.model");
+const postModels = require('@/models/post.model')
 
-const getAllComment = (req, res) => {
-  return res.json({
-    data: commentModels.findAll(),
-  });
-};
+const getAll = (req, res) => {
+    try {
+        return res.status(200).json({
+            data: postModels.findAll()
+        })
+    } catch (error) {
+        res.status(400).json({
+            errorDesc: error
+        })
+    }
+}
 
-const getOneComment = (req, res) => {
+const getOnePost = (req, res) => {
   try {
     const id = req.params.id;
     return res.json({
-      data: commentModels.findOne(id),
+      data: postModels.findOne(id),
     });
   } catch (error) {
     res.status(404).json({
@@ -19,17 +25,17 @@ const getOneComment = (req, res) => {
   }
 };
 
-const creatComment = (req, res) => {
+const creatPost = (req, res) => {
   try {
     const content = req.body.content;
-    const postId = req.body.postId;
-    const newComment = commentModels.createComment({
-      postId: postId,
+    const title = req.body.title;
+    const newPost = postModels.createPost({
+      title: title,
       content: content,
     });
 
     res.status(201).json({
-      data: newComment,
+      data: newPost,
     });
   } catch (error) {
     res.status(400).json({
@@ -38,18 +44,19 @@ const creatComment = (req, res) => {
   }
 };
 
-const editComment = (req, res) => {
+const editPost = (req, res) => {
   try {
     const commentId = req.params.id;
-    const editComment = commentModels.editComment({
+    const editPost = postModels.editPost({
       id: commentId,
       content: req.body.content,
+      title: req.body.title
     });
     res.status(200).json({
-      data: editComment,
+      data: editPost,
     });
   } catch (error) {
-    if(error.message == 'Not found comment') {
+    if(error.message == 'Not found post') {
          res.status(404).json({
         success: false,
         message: error.message,
@@ -63,10 +70,10 @@ const editComment = (req, res) => {
   }
 };
 
-const deleleComment = (req, res) => {
+const delelePost = (req, res) => {
     const idDelete = +req.params.id
     try {
-        commentModels.deleteComment(idDelete)
+        postModels.deletePost(idDelete)
         res.status(204).json()
     } catch (error) {
         res.status(404).json({
@@ -76,4 +83,5 @@ const deleleComment = (req, res) => {
     }
 }
 
-module.exports = { getAllComment, getOneComment, creatComment, editComment, deleleComment };
+
+module.exports = {getAll, getOnePost, creatPost, editPost, delelePost}

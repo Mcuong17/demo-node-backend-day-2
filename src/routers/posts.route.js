@@ -1,17 +1,12 @@
 const express = require('express')
 const router = express.Router()
-const taskController = require("@/controller/tasks.controller")
+const postController = require("@/controller/posts.controller")
 
 //Default: /api/post
 
-router.get("/", taskController.getAll)
-
-router.get("/:id", (req, res) => {
-    res.send("Task Detail")
-})
-
-router.post("/", (req, res) => {
-    res.send("Task Created")
-})
-
+router.get("/", postController.getAll)
+router.get("/:id", postController.getOnePost)
+router.post("/", postController.creatPost)
+router.put("/:id", postController.editPost)
+router.delete("/:id", postController.delelePost)
 module.exports = router

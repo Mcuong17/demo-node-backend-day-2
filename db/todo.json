@@ -1,5 +1,18 @@
 {
-  "posts": [],
+  "posts": [
+    {
+      "id": 1,
+      "title": "Tiêu đề bài viết 1",
+      "createdAt": "Wed Dec 31 2025 05:29:06 GMT+0700 (Indochina Time)",
+      "content": "Bài viết 1"
+    },
+    {
+      "id": 2,
+      "title": "Tiêu đề bài viết 2",
+      "createdAt": "Wed Dec 31 2025 05:29:29 GMT+0700 (Indochina Time)",
+      "content": "Bài viết 2"
+    }
+  ],
   "tasks": [],
   "comments": [
     {

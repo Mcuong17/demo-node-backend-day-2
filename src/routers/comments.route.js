@@ -1,6 +1,6 @@
 const express = require('express')
 const router = express.Router()
-const commentController = require("@/controller/comment.controller")
+const commentController = require("@/controllers/comment.controller")
 
 
 

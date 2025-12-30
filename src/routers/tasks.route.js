@@ -2,7 +2,7 @@ const express = require('express')
 
 const router = express.Router()
 
-const taskControllers = require("@/controller/tasks.controller")
+const taskControllers = require("@/controllers/tasks.controller")
 
 //Default: /api/task
 

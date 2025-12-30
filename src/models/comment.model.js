@@ -30,7 +30,7 @@ const commentModels = {
             id: +maxId + 1,
             postId: comment.postId,
             createdAt: new Date().toString(),
-            comment: comment.content
+            content: comment.content
         }
         db.comments.push(newComment)
         writeDB(db)
@@ -40,16 +40,25 @@ const commentModels = {
         if(!comment.content) {
             throw new Error("Content can't be null!")
         }
-        const indexComment = db.comment.findIndex(_cmt => _cmt.id == id)
+        const indexComment = db.comments.findIndex(_cmt => _cmt.id == comment.id)
         if(indexComment == -1) {
             throw new Error("Not found comment")
         }
          db.comments[indexComment] = {
             ...db.comments[indexComment],
-            ...comment
+            content: comment.content
          }
          writeDB(db)
          return db.comments[indexComment]
+    },
+    deleteComment(id) {
+        const index = db.comments.findIndex(_comment => _comment.id == id)
+        if(index == -1) {
+            throw new Error("Not found comment")
+        }
+        db.comments.pop(index)
+        writeDB(db)
+        return db.comments
     }
     
 

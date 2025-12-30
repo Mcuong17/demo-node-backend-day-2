@@ -43,17 +43,37 @@ const editComment = (req, res) => {
     const commentId = req.params.id;
     const editComment = commentModels.editComment({
       id: commentId,
-      content: req.body.title,
+      content: req.body.content,
     });
-    res.json({
+    res.status(200).json({
       data: editComment,
     });
   } catch (error) {
-    res.status(400).json({
-      success: false,
-      message: error.message,
-    });
+    if(error.message == 'Not found comment') {
+         res.status(404).json({
+        success: false,
+        message: error.message,
+        });
+    } else {
+        res.status(400).json({
+          success: false,
+          message: error.message,
+        });
+    }
   }
 };
 
-module.exports = { getAllComment, getOneComment, creatComment, editComment };
+const deleleComment = (req, res) => {
+    const idDelete = +req.params.id
+    try {
+        commentModels.deleteComment(idDelete)
+        res.status(204).json()
+    } catch (error) {
+        res.status(404).json({
+          success: false,
+          message: error.message,
+        });
+    }
+}
+
+module.exports = { getAllComment, getOneComment, creatComment, editComment, deleleComment };

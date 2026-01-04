@@ -1,23 +1,29 @@
-require('dotenv').config()
-require('module-alias/register')
+require("dotenv").config();
+require("module-alias/register");
+require("@/config/database")
+const express = require("express");
+const appRoute = require("@/routes");
+const app = express();
+const cors = require("cors");
+const jsonMiddleware = require("@/middlewares/json.middleware");
+const respone = require("@/middlewares/respone.middleware");
+const exeptionHandler = require("@/middlewares/exeption.middleware");
+const notFound = require("@/middlewares/notFound.middleware");
+const { apiRateLimiter } = require("@/middlewares/rateLimiter");
 
-const express = require('express')
-const appRoute = require('@/routers')
-const app = express()
-const cors = require('cors')
-const {writeDB, readDB} = require('./utils/jsonDB')
 
-const port = 3017
+const port = 3017;
 
-const allowedOrigins = [
-  "http://localhost:5173",
-  "https://mcuong17.github.io"
-];
-
+const allowedOrigins = ["http://localhost:5173", "https://mcuong17.github.io"];
 
 // Middlewares
-app.use(express.json())
-app.use(express.static('public'))
+// app.use(express.json())
+app.use(jsonMiddleware)
+app.use(respone)
+
+
+
+app.use(express.static("public"));
 app.use(
   cors({
     origin: (origin, callback) => {
@@ -30,16 +36,15 @@ app.use(
     },
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"],
-    credentials: true
+    credentials: true,
   })
-)
-
+);
 
 app.use((req, res, next) => {
   res.header("Access-Control-Allow-Origin", req.headers.origin || "*");
   res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
   res.header("Access-Control-Allow-Headers", "Content-Type, Authorization");
-  if (req.method === 'OPTIONS') return res.sendStatus(200);
+  if (req.method === "OPTIONS") return res.sendStatus(200);
   next();
 });
 
@@ -47,15 +52,18 @@ app.use((req, res, next) => {
 
 
 // Router
-app.use('/api', appRoute)
-
-
-
+app.use("/api", appRoute);
+app.use(apiRateLimiter)
+app.use(notFound )
+app.use(exeptionHandler)
 app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`)
-})
-
+  console.log(`Example app listening on port ${port}`);
+});
 
 // Client -> request -> controller -> model -> JSON respone/View
 // Routing:
 // app.METHOD('/pathname')
+
+
+//Viết middleware taskCreateValidator.middleware để validate dữ liệu khi tạo một task mới
+//

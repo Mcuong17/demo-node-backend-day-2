@@ -2,26 +2,18 @@ const postModels = require('@/models/post.model')
 
 const getAll = (req, res) => {
     try {
-        return res.status(200).json({
-            data: postModels.findAll()
-        })
+       res.success(postModels.findAll(), 201)
     } catch (error) {
-        res.status(400).json({
-            errorDesc: error
-        })
+        res.error( error ,400)
     }
 }
 
 const getOnePost = (req, res) => {
   try {
     const id = req.params.id;
-    return res.json({
-      data: postModels.findOne(id),
-    });
+    res.success(postModels.findOne(id), 200)
   } catch (error) {
-    res.status(404).json({
-      message: error.message,
-    });
+    res.error(error.message, 400)
   }
 };
 

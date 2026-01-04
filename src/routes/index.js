@@ -8,10 +8,12 @@ const tasksRoute = require('./tasks.route')
 const postsRoute = require('./posts.route')
 const usersRoute = require('./users.route')
 const commentRoute = require('./comments.route')
+const testRoute = require('./test.route')
 
 router.use('/tasks', tasksRoute) 
 router.use('/posts', postsRoute)
 router.use('/users', usersRoute)
 router.use('/comments', commentRoute)
+router.use('/test', testRoute)
 
 module.exports = router

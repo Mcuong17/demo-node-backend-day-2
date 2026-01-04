@@ -1,6 +1,6 @@
 const express = require('express')
 const router = express.Router()
-const postController = require("@/controllers/posts.controller")
+const postController = require("@/controllers/post.controller")
 
 //Default: /api/post
 

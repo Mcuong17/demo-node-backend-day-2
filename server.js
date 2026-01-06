@@ -6,9 +6,9 @@ const appRoute = require("@/routes");
 const app = express();
 const cors = require("cors");
 const jsonMiddleware = require("@/middlewares/json.middleware");
-const respone = require("@/middlewares/respone.middleware");
-const exeptionHandler = require("@/middlewares/exeption.middleware");
-const notFound = require("@/middlewares/notFound.middleware");
+const respone = require("@/middlewares/responseFormat");
+const exeptionHandler = require("@/middlewares/exceptionHandler");
+const notFound = require("@/middlewares/notFoundHandler");
 const { apiRateLimiter } = require("@/middlewares/rateLimiter");
 
 

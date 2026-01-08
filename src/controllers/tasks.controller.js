@@ -76,4 +76,4 @@ const toggle = (req, res) => {
   res.send("Toggle Task");
 };
 
-module.exports = { getAll, getOne, create, toggle, edit, delele, getPage };
+module.exports = { getAll, getOne, create, toggle, edit, delele };

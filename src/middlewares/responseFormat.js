@@ -1,8 +1,9 @@
 const respone = (_, res, next) => {
-    res.success = (data, status = 200) => {
+    res.success = (data, status = 200, passProps = {}) => {
         res.status(status).json( {
             status: "Success",
-            data
+            data,
+            ...passProps
         })
     }
 

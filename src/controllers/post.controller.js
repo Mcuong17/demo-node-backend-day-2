@@ -1,34 +1,60 @@
-const postModels = require('@/models/post.model')
+const posts = require('@/models/post.model')
 
-const getAll = (req, res) => {
+
+const getAll = async (req, res) => {
     try {
-       res.success(postModels.findAll(), 201)
+      const page = +req.query.page || 1
+      const limit = 10
+      const offset = (page - 1) * limit
+      const postsList =  await posts.findAll(limit, offset)
+      const count = await posts.count()
+      
+      const pagination = {
+        current_page: page,
+        total: count,
+        per_page: limit
+      }
+      if(posts.length) {
+        pagination.from = offset + 1
+        pagination.to = offset + limit
+      }
+       res.success(
+        postsList,
+        200,
+        {
+          pagination
+        }
+      )
     } catch (error) {
         res.error( 400, error )
     }
 }
 
-const getOnePost = (req, res) => {
+const getOnePost = async (req, res) => {
   try {
     const id = req.params.id;
-    res.success(postModels.findOne(id), 200)
+    res.success(await posts.findOne(id), 200)
   } catch (error) {
     res.error( 400, error.message )
   }
 };
 
-const creatPost = (req, res) => {
+const creatPost = async (req, res) => {
   try {
-    const content = req.body.content;
-    const title = req.body.title;
-    const newPost = postModels.createPost({
-      title: title,
-      content: content,
-    });
-
-    res.status(201).json({
-      data: newPost,
-    });
+   const newPost = await posts.create(
+    {
+      title: req.body.title, 
+      slug: req.body.slug,
+      content: req.body.content,
+      description: req.body.description,
+      status: req.body.status
+    }
+  )
+       if(newPost) {
+         return res.success({
+           message: `Add posts ${req.body.title.trim()} (${newPost.insertId}) successfully`
+         }, 201)
+       }
   } catch (error) {
     res.status(400).json({
       errorDesc: error.message,
@@ -36,17 +62,18 @@ const creatPost = (req, res) => {
   }
 };
 
-const editPost = (req, res) => {
+const editPost = async (req, res) => {
   try {
-    const commentId = req.params.id;
-    const editPost = postModels.editPost({
-      id: commentId,
-      content: req.body.content,
-      title: req.body.title
-    });
-    res.status(200).json({
-      data: editPost,
-    });
+     await posts.update({
+            title: req.body.title,
+            slug: req.body.slug,
+            description: req.body.description,
+            content: req.body.content,
+            status: req.body.status
+        })
+        res.success({
+          message: `Update post (${req.params.id}) successfully`
+        })
   } catch (error) {
     if(error.message == 'Not found post') {
          res.status(404).json({
@@ -62,10 +89,10 @@ const editPost = (req, res) => {
   }
 };
 
-const delelePost = (req, res) => {
+const delelePost = async (req, res) => {
     const idDelete = +req.params.id
     try {
-        postModels.deletePost(idDelete)
+        await posts.destroy(idDelete)
         res.status(204).json()
     } catch (error) {
         res.status(404).json({

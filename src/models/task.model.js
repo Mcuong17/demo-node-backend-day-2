@@ -14,7 +14,7 @@ class Tasks {
     return rows;
   }
 
-  async createTask(param) {
+  async create(param) {
     const [results] = await pool.query("INSERT into tasks SET ?", {
       title: param.title,
       slug: param.slug,
@@ -22,7 +22,7 @@ class Tasks {
     return results;
   }
 
-  async editTask(param) {
+  async update(param) {
     return await pool.query("UPDATE tasks SET ? WHERE id = ?", [
       {
         title: param.title,
@@ -33,7 +33,7 @@ class Tasks {
     ]);
   }
 
-  async deleteTask(id) {
+  async destroy(id) {
     return await pool.query("DELETE FROM tasks WHERE id = ?", [id])
   }
 }

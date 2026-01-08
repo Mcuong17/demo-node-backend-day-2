@@ -1,10 +1,13 @@
-const pool = require("@/config/database");
-const taskModel1 = require("@/models/task1.model");
 const taskModel = require('@/models/task.model')
 
 const getAll = async (req, res) => {
-    const tasks = await taskModel.findAll()
+    
+    try {
+      const tasks = await taskModel.findAll()
     res.success(tasks)
+    } catch (error) {
+      res.error(400,error,error.message)
+    }
 };
 
 const getOne = async (req, res) => {
@@ -21,9 +24,11 @@ const getOne = async (req, res) => {
   }
 };
 
+
+
 const create = async (req, res) => {
   try {
-    const newTask = await taskModel.createTask({title: req.body.title, slug: req.body.slug})
+    const newTask = await taskModel.create({title: req.body.title, slug: req.body.slug})
     if(newTask) {
       return res.success({
         message: `Add task ${req.body.title.trim()} (${newTask.insertId}) successfully`
@@ -38,7 +43,7 @@ const create = async (req, res) => {
 
 const edit = async (req, res) => {
   try {
-    await taskModel.editTask({
+    await taskModel.update({
       id: req.params.id,
       title: req.body.title,
       slug: req.body.slug,
@@ -56,7 +61,7 @@ const edit = async (req, res) => {
 
 const delele = async (req, res) => {
   try {
-      await taskModel.deleteTask(req.params.id)
+      await taskModel.destroy(req.params.id)
       res.success({
         message: `Delete task: ${req.params.id} successfully`
       }, 204)
@@ -71,4 +76,4 @@ const toggle = (req, res) => {
   res.send("Toggle Task");
 };
 
-module.exports = { getAll, getOne, create, toggle, edit, delele };
+module.exports = { getAll, getOne, create, toggle, edit, delele, getPage };

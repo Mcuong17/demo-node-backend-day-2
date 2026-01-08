@@ -6,7 +6,7 @@ const appRoute = require("@/routes");
 const app = express();
 const cors = require("cors");
 const jsonMiddleware = require("@/middlewares/json.middleware");
-const respone = require("@/middlewares/responseFormat");
+const responseFormat  = require("@/middlewares/responseFormat");
 const exeptionHandler = require("@/middlewares/exceptionHandler");
 const notFound = require("@/middlewares/notFoundHandler");
 const { apiRateLimiter } = require("@/middlewares/rateLimiter");
@@ -16,10 +16,9 @@ const port = 3017;
 
 const allowedOrigins = ["http://localhost:5173", "https://mcuong17.github.io"];
 
-// Middlewares
-// app.use(express.json())
+
+app.use(responseFormat)
 app.use(jsonMiddleware)
-app.use(respone)
 
 
 
@@ -52,8 +51,8 @@ app.use((req, res, next) => {
 
 
 // Router
-app.use("/api", appRoute);
 app.use(apiRateLimiter)
+app.use("/api", appRoute);
 app.use(notFound )
 app.use(exeptionHandler)
 app.listen(port, () => {

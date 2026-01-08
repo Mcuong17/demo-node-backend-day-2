@@ -6,10 +6,11 @@ const respone = (_, res, next) => {
         })
     }
 
-    res.error = (error, status = 400) => {
+    res.error = (status, error = null, message) => {
         res.status(status).json({
             status:"Error",
-            error
+            error,
+            message
         })
     }
 

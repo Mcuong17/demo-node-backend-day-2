@@ -4,7 +4,7 @@ const getAll = (req, res) => {
     try {
        res.success(postModels.findAll(), 201)
     } catch (error) {
-        res.error( error ,400)
+        res.error( 400, error )
     }
 }
 
@@ -13,7 +13,7 @@ const getOnePost = (req, res) => {
     const id = req.params.id;
     res.success(postModels.findOne(id), 200)
   } catch (error) {
-    res.error(error.message, 400)
+    res.error( 400, error.message )
   }
 };
 

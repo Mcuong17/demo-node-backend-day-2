@@ -15,5 +15,6 @@ router.use('/posts', postsRoute)
 router.use('/users', usersRoute)
 router.use('/comments', commentRoute)
 router.use('/test', testRoute)
+router.use('/user', usersRoute)
 
 module.exports = router

@@ -1,30 +1,29 @@
-const posts = require('@/models/post.model')
-const postsService = require('@/services/posts.service')
+const userModel = require('@/models/user.model')
+const usersService = require('@/services/posts.service')
 
 
 const getAll = async (req, res) => {
     try {
       const page = +req.query.page || 1
-      const userId = +req.query.user_id
-      const result = await postsService.pagination(page, 20,userId)
+      const result = await usersService.pagination(page)
       res.paginate(result)
     } catch (error) {
         res.error( 400, error.message )
     }
 }
 
-const getOnePost = async (req, res) => {
+const getOneUser = async (req, res) => {
   try {
     const id = req.params.id;
-    res.success(await posts.findOne(id), 200)
+    res.success(await Users.findOne(id), 200)
   } catch (error) {
     res.error( 400, error.message )
   }
 };
 
-const creatPost = async (req, res) => {
+const creatUser = async (req, res) => {
   try {
-   const newPost = await posts.create(
+   const newUser = await Users.create(
     {
       title: req.body.title, 
       slug: req.body.slug,
@@ -33,9 +32,9 @@ const creatPost = async (req, res) => {
       status: req.body.status
     }
   )
-       if(newPost) {
+       if(newUser) {
          return res.success({
-           message: `Add posts ${req.body.title.trim()} (${newPost.insertId}) successfully`
+           message: `Add Users ${req.body.title.trim()} (${newUser.insertId}) successfully`
          }, 201)
        }
   } catch (error) {
@@ -45,9 +44,9 @@ const creatPost = async (req, res) => {
   }
 };
 
-const editPost = async (req, res) => {
+const editUser = async (req, res) => {
   try {
-     await posts.update({
+     await Users.update({
             title: req.body.title,
             slug: req.body.slug,
             description: req.body.description,
@@ -55,10 +54,10 @@ const editPost = async (req, res) => {
             status: req.body.status
         })
         res.success({
-          message: `Update post (${req.params.id}) successfully`
+          message: `Update User (${req.params.id}) successfully`
         })
   } catch (error) {
-    if(error.message == 'Not found post') {
+    if(error.message == 'Not found User') {
          res.status(404).json({
         success: false,
         message: error.message,
@@ -72,10 +71,10 @@ const editPost = async (req, res) => {
   }
 };
 
-const delelePost = async (req, res) => {
+const deleleUser = async (req, res) => {
     const idDelete = +req.params.id
     try {
-        await posts.destroy(idDelete)
+        await Users.destroy(idDelete)
         res.status(204).json()
     } catch (error) {
         res.status(404).json({
@@ -86,4 +85,4 @@ const delelePost = async (req, res) => {
 }
 
 
-module.exports = {getAll, getOnePost, creatPost, editPost, delelePost}
+module.exports = {getAll, getOneUser, creatUser, editUser, deleleUser}

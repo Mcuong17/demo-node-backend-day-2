@@ -1,9 +1,10 @@
 const pool = require("@/config/database")
 
-class Posts {
-    async findAll(limit, offset, userId) {
+class Users {
+    async findAll(limit, offset) {
+        console.log(`SELECT * FROM posts LIMIT ${limit} OFFSET ${offset}`);
         
-        const [rows] = await pool.query(`SELECT * FROM posts WHERE user_id=${userId} LIMIT ${limit} OFFSET ${offset}`)
+        const [rows] = await pool.query(`SELECT * FROM posts LIMIT ${limit} OFFSET ${offset}`)
         return rows
    }
    
@@ -46,4 +47,4 @@ class Posts {
   }
 }
 
-module.exports = new Posts()
+module.exports = new Users()

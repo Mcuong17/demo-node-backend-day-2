@@ -1,5 +1,6 @@
 const pool = require("@/config/database")
 
+
 class Posts {
     async findAll(limit, offset, userId) {
         
@@ -10,6 +11,12 @@ class Posts {
    async findOne(id) {
     const [row] = await pool.query(`SELECT * FROM posts where id = ${id}`)
     return row[0]
+   }
+
+   async findUserPosts(userId) {
+        const query = `SELECT * FROM posts WHERE id in (SELECT post_id FROM user_post where user_id = ${userId})`
+        const [row] = await pool.query(query)
+        return row
    }
 
    async count() {

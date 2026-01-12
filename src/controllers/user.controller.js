@@ -1,3 +1,4 @@
+const postModel = require('@/models/post.model')
 const userModel = require('@/models/user.model')
 const usersService = require('@/services/posts.service')
 
@@ -12,6 +13,15 @@ const getAll = async (req, res) => {
     }
 }
 
+
+const getUserPosts = async (req, res) => {
+  try {
+   const userPosts = await postModel.findUserPosts(req.params.id)
+    res.success(userPosts)
+  } catch (e) {
+    res.error(400, e.message)
+  }
+}
 const getOneUser = async (req, res) => {
   try {
     const id = req.params.id;
@@ -85,4 +95,4 @@ const deleleUser = async (req, res) => {
 }
 
 
-module.exports = {getAll, getOneUser, creatUser, editUser, deleleUser}
+module.exports = {getAll, getOneUser, creatUser, editUser, deleleUser, getUserPosts}

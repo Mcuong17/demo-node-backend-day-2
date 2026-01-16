@@ -11,7 +11,7 @@ const respone = (_, res, next) => {
         res.success(rows, 200, {pagination})
     }
 
-    res.error = (status, error = null, message) => {
+    res.error = (status = 400, error = null, message) => {
         res.status(status).json({
             status:"Error",
             error,
